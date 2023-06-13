@@ -41,7 +41,7 @@ cp ./client/.env_local.example ./client/.env_local
 
 Update the .env_local file:
 
-```json
+```
 STRIPE_PUBLIC_KEY={your Publishable key}
 ```
 
@@ -61,7 +61,7 @@ export LOCAL_IP=$(ipconfig getifaddr en0)
 
 The babel.config.js file already has LOCAL_IP in the allowed list so it is available in the app:
 
-```json
+```
 allowlist: [ .., "LOCAL_IP"],
 ```
 
