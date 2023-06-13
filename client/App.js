@@ -23,13 +23,13 @@ export default function App() {
       const json = await res.json();
 
       if (json.error) {
-        Alert.alert("Payment API request failed: " + json.error);
+        Alert.alert("Payment API request failed", json.error);
         return;
       }
 
       return json.paymentIntentClientSecret;
     } catch (err) {
-      Alert.alert("Payment API request failed. " + err);
+      Alert.alert("Payment API request failed", err);
     }
   }
 
@@ -39,13 +39,10 @@ export default function App() {
     const initRes = await initPaymentSheet({
       merchantDisplayName: "DotnetWorks",
       paymentIntentClientSecret: secret,
-      defaultBillingDetails: {
-        name: "DotnetWorks",
-      },
     });
 
     if (initRes.error) {
-      Alert.alert("Something went wrong: " + initRes.error);
+      Alert.alert("Something went wrong", initRes.error);
       return;
     }
 
@@ -54,7 +51,7 @@ export default function App() {
     if (paymentRes.error) {
       Alert.alert("Payment failed", paymentRes.error);
     } else {
-      Alert.alert("Payment succeeded!");
+      Alert.alert("Success", "Payment succeeded!");
     }
   }
 
