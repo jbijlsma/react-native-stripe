@@ -1,4 +1,4 @@
-# Example of Stripe from a React Native Expo app
+# Example of using the Stripe Payments API in a React Native Expo app
 
 <p float="left" align="middle">
 <img src="./screenshots/stripe_dark.gif" width="40%">
@@ -22,7 +22,7 @@ cp ./server/.env.example ./server/.env
 Update the .env file:
 
 ```json
-STRIPE_PUBLIC_KEY={your Publishable key}
+STRIPE_SECRET_KEY={your Secret key}
 ```
 
 Start the server:
@@ -42,7 +42,7 @@ cp ./client/.env_local.example ./client/.env_local
 Update the .env_local file:
 
 ```json
-STRIPE_SECRET_KEY={your Secret key}
+STRIPE_PUBLIC_KEY={your Publishable key}
 ```
 
 Start the client:
@@ -51,15 +51,15 @@ Start the client:
 npm start
 ```
 
-## Issues
+## Good to know
 
-- If you want to run on your real (iOS) device and want to access the Payment API running on your host you can update your shell startup config file (~/.zshrc in my case) and export your machine's network interface ip with:
+- If you want to run on your real (iOS) device and want to access the Payment API running on your own machine you can update your shell startup config file (~/.zshrc in my case) and export your machine's network interface ip with:
 
 ```bash
 export LOCAL_IP=$(ipconfig getifaddr en0)
 ```
 
-The babel.config.js file has LOCAL_IP in the allowed list so it is available in the app:
+The babel.config.js file already has LOCAL_IP in the allowed list so it is available in the app:
 
 ```json
 allowlist: [ .., "LOCAL_IP"],
