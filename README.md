@@ -46,7 +46,11 @@ Start the client:
 npm start
 ```
 
-## Testing the server
+## Issues
+
+- Code that looks ok and compiles can easily crash the Expo Go app without any error messages appearing in the console. For example calling Alert.alert(..) with only one argument or calling Alert.alert(.., ..) with 2 arguments, but not passing a string to the arguments.
+
+## Testing the server∂
 
 To create a payment intent:
 

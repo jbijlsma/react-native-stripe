@@ -1,78 +1,19 @@
-import { StripeProvider, useStripe } from "@stripe/stripe-react-native";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Button, Alert, Platform } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { STRIPE_PUBLIC_KEY } from "@env";
+import PaymentScreen from "./screens/PaymentScreen";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const { initPaymentSheet, presentPaymentSheet } = useStripe();
-
-  async function getStripePaymentIntentClientSecret() {
-    const server = Platform.OS === "ios" ? "localhost" : "10.0.2.2";
-    const uri = `http://${server}:3000/payments/intent`;
-
-    try {
-      const res = await fetch(uri, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ amount: 1750 }),
-      });
-
-      const json = await res.json();
-
-      if (json.error) {
-        Alert.alert("Payment API request failed", json.error);
-        return;
-      }
-
-      return json.paymentIntentClientSecret;
-    } catch (err) {
-      Alert.alert("Payment API request failed", err);
-    }
-  }
-
-  async function onPressHandle() {
-    const secret = await getStripePaymentIntentClientSecret();
-
-    const initRes = await initPaymentSheet({
-      merchantDisplayName: "DotnetWorks",
-      paymentIntentClientSecret: secret,
-    });
-
-    if (initRes.error) {
-      Alert.alert("Something went wrong", initRes.error);
-      return;
-    }
-
-    const paymentRes = await presentPaymentSheet();
-
-    if (paymentRes.error) {
-      Alert.alert("Payment failed", paymentRes.error);
-    } else {
-      Alert.alert("Success", "Payment succeeded!");
-    }
-  }
-
   return (
-    <StripeProvider publishableKey={STRIPE_PUBLIC_KEY}>
-      <View style={styles.container}>
-        <Button
-          title="Make Stripe Payment"
-          onPress={onPressHandle}
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={PaymentScreen}
         />
-        <StatusBar style="auto" />
-      </View>
-    </StripeProvider>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
