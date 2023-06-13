@@ -21,7 +21,7 @@ cp ./server/.env.example ./server/.env
 
 Update the .env file:
 
-```json
+```
 STRIPE_SECRET_KEY={your Secret key}
 ```
 
