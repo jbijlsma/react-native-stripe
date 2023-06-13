@@ -8,7 +8,7 @@ module.exports = function (api) {
         {
           // If you don't use the direnv shell extension the path to the file that contains the settings (default .env)
           path: ".env_local",
-          allowlist: ["STRIPE_PUBLIC_KEY"],
+          allowlist: ["STRIPE_PUBLIC_KEY", "LOCAL_IP"],
         },
       ],
     ],

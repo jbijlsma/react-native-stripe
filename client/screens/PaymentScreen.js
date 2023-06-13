@@ -1,14 +1,19 @@
 import { StripeProvider, useStripe } from "@stripe/stripe-react-native";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Button, Alert, Platform } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 import { STRIPE_PUBLIC_KEY } from "@env";
+import { LOCAL_IP } from "@env";
 
 export default function PaymentScreen() {
+  const { colors } = useTheme();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
   async function getStripePaymentIntentClientSecret() {
-    const server = Platform.OS === "ios" ? "localhost" : "10.0.2.2";
+    console.log("LOCAL_IP: " + LOCAL_IP);
+
+    const server = Platform.OS === "ios" ? LOCAL_IP ?? "0.0.0.0" : "10.0.2.2";
     const uri = `http://${server}:3000/payments/intent`;
 
     try {
@@ -57,7 +62,7 @@ export default function PaymentScreen() {
 
   return (
     <StripeProvider publishableKey={STRIPE_PUBLIC_KEY}>
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Button
           title="Make Stripe Payment"
           onPress={onPressHandle}
