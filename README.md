@@ -1,5 +1,10 @@
 # Example of Stripe from a React Native Expo app
 
+<p float="left" align="middle">
+<img src="./screenshots/stripe_dark.gif" width="40%">
+<img src="./screenshots/stripe_light.gif" width="40%">
+</p>
+
 # Running locally
 
 Stripe requires that you create your own backend server (API) to create Payment Intentions. In this example the custom backend server (API) is implemented in NodeJs.
