@@ -1,0 +1,6 @@
+https://api.stripe.com/v1/elements/sessions?
+key=pk_xxx
+&type=payment_intent
+&locale=en-US
+&client_secret=pi_xxx
+&expand[0]=payment_method_preference.payment_intent.payment_method

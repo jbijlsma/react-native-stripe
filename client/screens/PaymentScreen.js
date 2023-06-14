@@ -1,28 +1,23 @@
-import { StripeProvider, useStripe } from "@stripe/stripe-react-native";
+import { useStripe } from "@stripe/stripe-react-native";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Button, Alert, Platform } from "react-native";
+import { StyleSheet, View, Button, Alert } from "react-native";
 import { useTheme } from "@react-navigation/native";
-
-import { STRIPE_PUBLIC_KEY } from "@env";
-import { LOCAL_IP } from "@env";
+import { usePaymentApi } from "../hooks/usePaymentApi";
 
 export default function PaymentScreen() {
   const { colors } = useTheme();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
   async function getStripePaymentIntentClientSecret() {
-    console.log("LOCAL_IP: " + LOCAL_IP);
-
-    const server = Platform.OS === "ios" ? LOCAL_IP ?? "0.0.0.0" : "10.0.2.2";
-    const uri = `http://${server}:3000/payments/intent`;
+    const baseUri = usePaymentApi();
+    const uri = `${baseUri}/payments/intent`;
 
     try {
-      const res = await fetch(uri, {
-        method: "POST",
+      const res = await fetch(`${uri}?amount=1850`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ amount: 1750 }),
       });
 
       const json = await res.json();
@@ -44,6 +39,7 @@ export default function PaymentScreen() {
     const initRes = await initPaymentSheet({
       merchantDisplayName: "DotnetWorks",
       paymentIntentClientSecret: secret,
+      allowsDelayedPaymentMethods: true,
     });
 
     if (initRes.error) {
@@ -54,6 +50,8 @@ export default function PaymentScreen() {
     const paymentRes = await presentPaymentSheet();
 
     if (paymentRes.error) {
+      console.log(JSON.stringify(paymentRes));
+
       Alert.alert("Payment Failed", paymentRes.error.message);
     } else {
       Alert.alert("Success", "Payment succeeded!");
@@ -61,15 +59,13 @@ export default function PaymentScreen() {
   }
 
   return (
-    <StripeProvider publishableKey={STRIPE_PUBLIC_KEY}>
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <Button
-          title="Make Stripe Payment"
-          onPress={onPressHandle}
-        />
-        <StatusBar style="auto" />
-      </View>
-    </StripeProvider>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Button
+        title="Make Stripe Payment"
+        onPress={onPressHandle}
+      />
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
