@@ -4,7 +4,7 @@ import { useConfirmPayment } from "@stripe/stripe-react-native";
 
 import { LOCAL_IP } from "@env";
 
-function GrabPaymentScreen() {
+function PayNativeCustomScreen() {
   const { colors } = useTheme();
   const { confirmPayment, loading } = useConfirmPayment();
 
@@ -73,4 +73,4 @@ function GrabPaymentScreen() {
   );
 }
 
-export default GrabPaymentScreen;
+export default PayNativeCustomScreen;

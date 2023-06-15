@@ -6,7 +6,7 @@ import { usePaymentApi } from "../hooks/usePaymentApi";
 
 // Following the example:
 // https://stripe.com/docs/payments/accept-a-payment?platform=react-native&ui=payment-sheet#react-native-customization
-export default function PaymentScreen() {
+function PayNativePaymentSheetScreen() {
   const { colors } = useTheme();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
@@ -91,3 +91,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default PayNativePaymentSheetScreen;
