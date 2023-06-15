@@ -74,7 +74,7 @@ app.get("/payment-link", async (req, res) => {
       },
     ],
     // if you pass more optioins here, the screen will let the user choose: payment_method_types: ["paynow", "grabpay", "card"],
-    payment_method_types: ["paynow"],
+    payment_method_types: ["paynow", "card"],
   });
 
   res.send({ url: paymentLink.url });
