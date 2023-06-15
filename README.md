@@ -1,8 +1,15 @@
 # Example of using the Stripe Payments API in a React Native Expo app
 
 <p float="left" align="middle">
-<img src="./screenshots/stripe_dark.gif" width="40%">
-<img src="./screenshots/stripe_light.gif" width="40%">
+<img src="./screenshots/native_paymentsheet_dark.gif" width="24%">
+<img src="./screenshots/native_paymentsheet_light.gif" width="24%">
+<img src="./screenshots/webview_dark.gif" width="24%">
+<img src="./screenshots/webview_light.gif" width="24%">
+</p>
+
+<p float="left" align="middle">
+<img src="./screenshots/native_custom_dark.gif" width="48%">
+<img src="./screenshots/native_custom_light.gif" width="48%">
 </p>
 
 # Running locally
