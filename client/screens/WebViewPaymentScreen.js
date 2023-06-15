@@ -6,12 +6,12 @@ import { usePaymentApi } from "../hooks/usePaymentApi";
 function WebViewPaymentScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation();
-  const paymentBaseUri = usePaymentApi();
+  const { paymentBaseUri } = usePaymentApi();
 
   async function onPayHandler() {
     const res = await fetch(`${paymentBaseUri}/payment-link`);
-    const json = await res.json();
-    const paymentLinkUri = json.url;
+    const paymentLink = await res.json();
+    const paymentLinkUri = paymentLink.url;
 
     setTimeout(() => {
       navigation.navigate("StripeWebView", {

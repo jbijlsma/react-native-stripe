@@ -1,0 +1,212 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "Stripe",
+  "dateExported": "2023-06-15T09:42:40.824Z",
+  "version": "1.1",
+  "folders": [],
+  "requests": [
+    {
+      "_id": "00a43a7a-5d84-499c-87c9-c3f99c63cdd7",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Get Products",
+      "url": "https://api.stripe.com/v1/products",
+      "method": "GET",
+      "sortNum": 10000,
+      "created": "2023-06-14T06:54:10.627Z",
+      "modified": "2023-06-15T09:39:31.005Z",
+      "headers": [],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "ad40ca1f-3db6-4e12-a3c1-6a53a286c02e",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Get Prices",
+      "url": "https://api.stripe.com/v1/prices",
+      "method": "GET",
+      "sortNum": 20000,
+      "created": "2023-06-14T07:09:53.397Z",
+      "modified": "2023-06-15T09:40:00.903Z",
+      "headers": [],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "8cb5385b-55e6-4917-9c76-1f730c077c21",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Create PaymentMethod",
+      "url": "https://api.stripe.com/v1/payment_methods",
+      "method": "POST",
+      "sortNum": 25000,
+      "created": "2023-06-15T07:22:08.736Z",
+      "modified": "2023-06-15T09:40:10.330Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "formencoded",
+        "raw": "",
+        "form": [
+          {
+            "name": "type",
+            "value": "paynow"
+          }
+        ]
+      },
+      "tests": []
+    },
+    {
+      "_id": "10556847-de25-4806-9285-577021170b80",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Create PaymentIntent",
+      "url": "https://api.stripe.com/v1/payment_intents",
+      "method": "POST",
+      "sortNum": 30000,
+      "created": "2023-06-15T06:43:05.071Z",
+      "modified": "2023-06-15T09:40:17.953Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "formencoded",
+        "raw": "",
+        "form": [
+          {
+            "name": "amount",
+            "value": "900"
+          },
+          {
+            "name": "currency",
+            "value": "sgd"
+          },
+          {
+            "name": "customer",
+            "value": "cus_O5JXerOSP8J5ER"
+          },
+          {
+            "name": "payment_method_types[0]",
+            "value": "paynow"
+          },
+          {
+            "name": "payment_method_data[type]",
+            "value": "paynow"
+          }
+        ]
+      },
+      "tests": []
+    },
+    {
+      "_id": "aaa64fd0-b9d4-41f6-ab6c-e21269df674c",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Create and confirm PaymentIntent",
+      "url": "https://api.stripe.com/v1/payment_intents",
+      "method": "POST",
+      "sortNum": 31250,
+      "created": "2023-06-15T07:56:34.428Z",
+      "modified": "2023-06-15T09:40:25.693Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "formencoded",
+        "raw": "",
+        "form": [
+          {
+            "name": "amount",
+            "value": "900"
+          },
+          {
+            "name": "currency",
+            "value": "sgd"
+          },
+          {
+            "name": "customer",
+            "value": "cus_O5JXerOSP8J5ER"
+          },
+          {
+            "name": "payment_method_types[0]",
+            "value": "paynow"
+          },
+          {
+            "name": "payment_method_data[type]",
+            "value": "paynow"
+          },
+          {
+            "name": "confirm",
+            "value": "true"
+          }
+        ]
+      },
+      "tests": []
+    },
+    {
+      "_id": "fa5e5701-01db-4d23-9aa1-b66e13675502",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Confirm PaymentIntent",
+      "url": "https://api.stripe.com/v1/payment_intents/pi_3NJB5fE0jVisloCu09HDGmmV/confirm",
+      "method": "POST",
+      "sortNum": 32500,
+      "created": "2023-06-15T07:26:52.435Z",
+      "modified": "2023-06-15T09:40:31.847Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "e12e2e60-974e-4783-a7c3-5d13e889011d",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Create PaymentIntent (local)",
+      "url": "http://localhost:4242/payment-intents",
+      "method": "POST",
+      "sortNum": 35000,
+      "created": "2023-06-15T07:26:14.899Z",
+      "modified": "2023-06-15T07:59:31.973Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"amount\": 700\n}",
+        "form": []
+      },
+      "tests": []
+    }
+  ],
+  "settings": {
+    "auth": {
+      "type": "basic",
+      "basic": {
+        "username": "sk_xxx",
+        "password": ""
+      }
+    }
+  }
+}

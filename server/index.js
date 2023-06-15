@@ -22,34 +22,40 @@ app.get("/config", (req, res) => {
   });
 });
 
-app.get("/payments/intent", async (req, res) => {
+app.get("/payment-methods", async (req, res) => {
+  const paymentMethods = await stripe.paymentMethods.list({});
+
+  return res.send(paymentMethods);
+});
+
+app.post("/payment-intents", async (req, res) => {
   try {
-    const customer = await stripe.customers.create({
-      email: "jeroen@bijlsma.com",
-    });
-    const ephemeralKey = await stripe.ephemeralKeys.create(
-      { customer: customer.id },
-      { apiVersion: "2022-11-15" }
-    );
+    const { amount, selectedPaymentMethod } = req.body;
+
+    const confirmProps = selectedPaymentMethod
+      ? {
+          // to be able to confirm the selected payment method it has to be passed here
+          payment_method_data: { type: selectedPaymentMethod },
+          confirm: true,
+        }
+      : {};
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: req.query.amount, // Integer, usd -> pennies, eur -> cents
+      amount: amount, // Integer, usd -> pennies, eur -> cents
       currency: "sgd",
-      // automatic_payment_methods: {
-      //   enabled: true,
-      // },
-      // payment_method_types: ["card", "paynow", "grabpay"],
-      payment_method_types: ["grabpay", "paynow"],
-      customer: customer.id,
-      // card: {
-      //   request_three_d_secure: "automatic",
-      // },
+      // here we specify the available payment methods (not very useful if we payment_method_data.type to the one we choose)
+      payment_method_types: ["card", "paynow", "grabpay"],
+      // to be able to confirm the selected payment method it has to be passed here
+      // payment_method_data: { type: "paynow" },
+      // confirm: true,
+      ...confirmProps,
     });
 
     res.json({
-      paymentIntent: paymentIntent.client_secret,
-      ephemeralKey: ephemeralKey.secret,
-      customer: customer.id,
+      secretKey: paymentIntent.client_secret,
       publishableKey: process.env.STRIPE_PUBLIC_KEY,
+      qrCodePngUri:
+        paymentIntent.next_action?.paynow_display_qr_code?.image_url_png,
     });
   } catch (e) {
     res.status(500).json({
@@ -67,6 +73,7 @@ app.get("/payment-link", async (req, res) => {
         quantity: 1,
       },
     ],
+    // if you pass more optioins here, the screen will let the user choose: payment_method_types: ["paynow", "grabpay", "card"],
     payment_method_types: ["paynow"],
   });
 

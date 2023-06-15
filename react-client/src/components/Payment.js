@@ -9,13 +9,17 @@ function Payment(props) {
   const [clientSecret, setClientSecret] = useState("");
 
   const createPaymentIntent = async () => {
-    const res = await fetch(
-      "http://localhost:4242/payments/intent?amount=1750"
-    );
+    const res = await fetch("http://localhost:4242/payment-intents", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount: 1750 }),
+    });
 
     const json = await res.json();
 
-    setClientSecret(json.paymentIntent);
+    setClientSecret(json.secretKey);
   };
 
   useEffect(() => {

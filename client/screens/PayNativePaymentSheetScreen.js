@@ -9,36 +9,7 @@ import { usePaymentApi } from "../hooks/usePaymentApi";
 function PayNativePaymentSheetScreen() {
   const { colors } = useTheme();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
-
-  async function createStripePaymentIntent() {
-    const baseUri = usePaymentApi();
-    const uri = `${baseUri}/payments/intent`;
-
-    try {
-      const res = await fetch(`${uri}?amount=1850`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const paymentIntent = await res.json();
-
-      if (paymentIntent.error) {
-        Alert.alert("Payment API request failed", paymentIntent.error);
-        return;
-      }
-
-      return {
-        paymentIntent: paymentIntent.paymentIntent,
-        ephemeralKey: paymentIntent.ephemeralKey,
-        customer: paymentIntent.customer,
-        publishableKey: paymentIntent.publishableKey,
-      };
-    } catch (err) {
-      Alert.alert("Payment API request failed", err);
-    }
-  }
+  const { createStripePaymentIntent } = usePaymentApi();
 
   async function onPressHandle() {
     const paymentIntent = await createStripePaymentIntent();
@@ -47,7 +18,7 @@ function PayNativePaymentSheetScreen() {
       merchantDisplayName: "DotnetWorks",
       customerId: paymentIntent.customer,
       customerEphemeralKeySecret: paymentIntent.ephemeralKey,
-      paymentIntentClientSecret: paymentIntent.paymentIntent,
+      paymentIntentClientSecret: paymentIntent.secretKey,
       // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
       //methods that complete payment after a delay, like SEPA Debit and Sofort.
       allowsDelayedPaymentMethods: true,

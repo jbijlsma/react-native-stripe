@@ -1,76 +1,84 @@
+import { useState } from "react";
 import { useTheme } from "@react-navigation/native";
-import { Button, View, Alert } from "react-native";
-import { useConfirmPayment } from "@stripe/stripe-react-native";
+import { Button, View, Image, StyleSheet, Alert } from "react-native";
 
-import { LOCAL_IP } from "@env";
+import { usePaymentApi } from "../hooks/usePaymentApi";
 
 function PayNativeCustomScreen() {
   const { colors } = useTheme();
-  const { confirmPayment, loading } = useConfirmPayment();
+  const { createStripePaymentIntent } = usePaymentApi();
 
-  async function getStripePaymentIntentClientSecret() {
-    const server = Platform.OS === "ios" ? LOCAL_IP ?? "0.0.0.0" : "10.0.2.2";
-    const uri = `http://${server}:3000/payments/intent`;
-
-    try {
-      const res = await fetch(uri, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ amount: 1750 }),
-      });
-
-      const json = await res.json();
-
-      if (json.error) {
-        Alert.alert("Payment API request failed", json.error);
-        return;
-      }
-
-      return json.paymentIntentClientSecret;
-    } catch (err) {
-      Alert.alert("Payment API request failed", err);
-    }
-  }
+  const [qrCodePngUri, setQrCodePngUri] = useState(null);
 
   async function onPayHandler() {
-    const secret = await getStripePaymentIntentClientSecret();
+    const paymentIntent = await createStripePaymentIntent("paynow");
 
-    const billingDetails = {
-      name: "John Doe",
-    };
-
-    const { error, paymentIntent } = await confirmPayment(secret, {
-      paymentMethodType: "GrabPay",
-      paymentMethodData: {
-        billingDetails,
-      },
-    });
-
-    if (error) {
-      Alert.alert(`Error code: ${error.code}`, error.message);
-      console.log("Payment confirmation error", error.message);
-    } else if (paymentIntent) {
-      Alert.alert("Success", "The payment was confirmed successfully!");
+    if (!paymentIntent.qrCodePngUri) {
+      Alert.alert(
+        "Oeps",
+        "The PaymentIntent returned does not contain a QR code link. Was the PaymentIntent confirmed?"
+      );
     }
+
+    setQrCodePngUri(paymentIntent.qrCodePngUri);
   }
 
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: colors.background,
       }}
     >
       <Button
-        title="Pay with GrabPay"
+        title="Pay with PayNow"
         onPress={onPayHandler}
       />
+
+      {qrCodePngUri && (
+        <View style={styles.payNowOuterContainer}>
+          <View style={styles.payNowInnerContainer}>
+            <Image
+              style={styles.payNowLogo}
+              source={require("../assets/paynow.png")}
+              resizeMode="contain"
+            />
+            <Image
+              source={{
+                uri: qrCodePngUri,
+              }}
+              style={styles.payNowQrCode}
+              resizeMode="contain"
+            />
+          </View>
+        </View>
+      )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  payNowOuterContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 16,
+  },
+  payNowInnerContainer: {
+    width: "100%",
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 16,
+  },
+  payNowLogo: {
+    height: 60,
+    margin: 12,
+  },
+  payNowQrCode: {
+    height: 300,
+    width: 300,
+  },
+});
 
 export default PayNativeCustomScreen;
