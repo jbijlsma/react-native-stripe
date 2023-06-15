@@ -4,11 +4,13 @@ import { StyleSheet, View, Button, Alert } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { usePaymentApi } from "../hooks/usePaymentApi";
 
+// Following the example:
+// https://stripe.com/docs/payments/accept-a-payment?platform=react-native&ui=payment-sheet#react-native-customization
 export default function PaymentScreen() {
   const { colors } = useTheme();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
-  async function getStripePaymentIntentClientSecret() {
+  async function createStripePaymentIntent() {
     const baseUri = usePaymentApi();
     const uri = `${baseUri}/payments/intent`;
 
@@ -20,26 +22,38 @@ export default function PaymentScreen() {
         },
       });
 
-      const json = await res.json();
+      const paymentIntent = await res.json();
 
-      if (json.error) {
-        Alert.alert("Payment API request failed", json.error);
+      if (paymentIntent.error) {
+        Alert.alert("Payment API request failed", paymentIntent.error);
         return;
       }
 
-      return json.paymentIntentClientSecret;
+      return {
+        paymentIntent: paymentIntent.paymentIntent,
+        ephemeralKey: paymentIntent.ephemeralKey,
+        customer: paymentIntent.customer,
+        publishableKey: paymentIntent.publishableKey,
+      };
     } catch (err) {
       Alert.alert("Payment API request failed", err);
     }
   }
 
   async function onPressHandle() {
-    const secret = await getStripePaymentIntentClientSecret();
+    const paymentIntent = await createStripePaymentIntent();
 
     const initRes = await initPaymentSheet({
       merchantDisplayName: "DotnetWorks",
-      paymentIntentClientSecret: secret,
+      customerId: paymentIntent.customer,
+      customerEphemeralKeySecret: paymentIntent.ephemeralKey,
+      paymentIntentClientSecret: paymentIntent.paymentIntent,
+      // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+      //methods that complete payment after a delay, like SEPA Debit and Sofort.
       allowsDelayedPaymentMethods: true,
+      defaultBillingDetails: {
+        name: "Jane Doe",
+      },
     });
 
     if (initRes.error) {

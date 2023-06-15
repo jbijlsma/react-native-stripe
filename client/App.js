@@ -23,7 +23,7 @@ export default function App() {
   return (
     <StripeProvider publishableKey={STRIPE_PUBLIC_KEY}>
       <NavigationContainer theme={theme}>
-        <Stack.Navigator initialRouteName="WebViewPayment">
+        <Stack.Navigator initialRouteName="Pay">
           <Stack.Screen
             name="Pay"
             component={PaymentScreen}

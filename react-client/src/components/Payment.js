@@ -15,7 +15,7 @@ function Payment(props) {
 
     const json = await res.json();
 
-    setClientSecret(json.paymentIntentClientSecret);
+    setClientSecret(json.paymentIntent);
   };
 
   useEffect(() => {
