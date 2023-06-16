@@ -4,7 +4,7 @@ import { LOCAL_IP } from "@env";
 
 export function usePaymentApi() {
   const server = Platform.OS === "ios" ? LOCAL_IP ?? "0.0.0.0" : "10.0.2.2";
-  const paymentBaseUri = `http://${server}:4242`;
+  const paymentBaseUri = `http://${server}:4242/stripe`;
 
   const createStripePaymentIntent = async (selectedPaymentMethod) => {
     const uri = `${paymentBaseUri}/payment-intents`;

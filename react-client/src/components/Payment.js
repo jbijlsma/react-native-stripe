@@ -9,7 +9,7 @@ function Payment(props) {
   const [clientSecret, setClientSecret] = useState("");
 
   const createPaymentIntent = async () => {
-    const res = await fetch("http://localhost:4242/payment-intents", {
+    const res = await fetch("http://localhost:4242/stripe/payment-intents", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

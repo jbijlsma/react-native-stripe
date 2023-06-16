@@ -8,7 +8,7 @@ function App() {
   const [stripePromise, setStripePromise] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:4242/config").then(async (res) => {
+    fetch("http://localhost:4242/stripe/config").then(async (res) => {
       const { publishableKey } = await res.json();
       setStripePromise(loadStripe(publishableKey));
     });
