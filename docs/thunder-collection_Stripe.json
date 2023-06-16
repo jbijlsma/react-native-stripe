@@ -1,7 +1,7 @@
 {
   "client": "Thunder Client",
-  "collectionName": "Stripe",
-  "dateExported": "2023-06-15T09:42:40.824Z",
+  "collectionName": "Stripe Payments",
+  "dateExported": "2023-06-16T01:26:26.587Z",
   "version": "1.1",
   "folders": [],
   "requests": [
@@ -197,6 +197,66 @@
         "raw": "{\n  \"amount\": 700\n}",
         "form": []
       },
+      "tests": []
+    },
+    {
+      "_id": "0e980d04-d0c8-494a-a7e2-410fc7dbe224",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Succeed PaymentIntent",
+      "url": "https://pm-hooks.stripe.com/paynow/test/payment?external_transaction_id=payatt_3NJRJBE0jVisloCu0gvEycyA&testmode_status=SUCCESS&merchant_id=acct_1NIOT8E0jVisloCu",
+      "method": "GET",
+      "sortNum": 45000,
+      "created": "2023-06-16T01:14:02.044Z",
+      "modified": "2023-06-16T01:22:20.157Z",
+      "headers": [],
+      "params": [
+        {
+          "name": "external_transaction_id",
+          "value": "payatt_3NJRJBE0jVisloCu0gvEycyA",
+          "isPath": false
+        },
+        {
+          "name": "testmode_status",
+          "value": "SUCCESS",
+          "isPath": false
+        },
+        {
+          "name": "merchant_id",
+          "value": "acct_1NIOT8E0jVisloCu",
+          "isPath": false
+        }
+      ],
+      "tests": []
+    },
+    {
+      "_id": "526bfad4-cfaa-41bf-ad94-f10bc83ab124",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Fail PaymentIntent",
+      "url": "https://pm-hooks.stripe.com/paynow/test/payment?external_transaction_id=payatt_3NJRPwE0jVisloCu146lhJfL&testmode_status=FAIL&merchant_id=acct_1NIOT8E0jVisloCu",
+      "method": "GET",
+      "sortNum": 55000,
+      "created": "2023-06-16T01:24:20.285Z",
+      "modified": "2023-06-16T01:26:04.207Z",
+      "headers": [],
+      "params": [
+        {
+          "name": "external_transaction_id",
+          "value": "payatt_3NJRPwE0jVisloCu146lhJfL",
+          "isPath": false
+        },
+        {
+          "name": "testmode_status",
+          "value": "FAIL",
+          "isPath": false
+        },
+        {
+          "name": "merchant_id",
+          "value": "acct_1NIOT8E0jVisloCu",
+          "isPath": false
+        }
+      ],
       "tests": []
     }
   ],
