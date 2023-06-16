@@ -8,6 +8,7 @@ const PORT = 4242;
 
 // Import your various routers
 const stripeRouter = require("./routes/stripe");
+const stripeGrabRouter = require("./routes/stripe-grab");
 const stripeEventsRouter = require("./routes/stripe-events");
 
 // use CORS for all
@@ -21,6 +22,7 @@ app.use(express.json());
 
 // set up the rest of the routes
 app.use("/stripe", stripeRouter);
+app.use("/stripe-grab", stripeGrabRouter);
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log("Payment API is listening on port", PORT);

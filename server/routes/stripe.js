@@ -23,6 +23,8 @@ router.post("/payment-intents", async (req, res) => {
   try {
     const { amount, selectedPaymentMethod } = req.body;
 
+    // immediately confirm the PaymentIntent
+    // confirming is normally done by the user when he/she selects a payment method from the available options
     const confirmProps = selectedPaymentMethod
       ? {
           // to be able to confirm the selected payment method it has to be passed here

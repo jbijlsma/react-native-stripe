@@ -1,7 +1,7 @@
 {
   "client": "Thunder Client",
-  "collectionName": "Stripe Payments",
-  "dateExported": "2023-06-16T01:26:26.587Z",
+  "collectionName": "Stripe",
+  "dateExported": "2023-06-16T09:02:37.485Z",
   "version": "1.1",
   "folders": [],
   "requests": [
@@ -116,7 +116,7 @@
       "method": "POST",
       "sortNum": 31250,
       "created": "2023-06-15T07:56:34.428Z",
-      "modified": "2023-06-15T09:40:25.693Z",
+      "modified": "2023-06-16T05:41:00.391Z",
       "headers": [
         {
           "name": "Content-Type",
@@ -151,6 +151,59 @@
           {
             "name": "confirm",
             "value": "true"
+          }
+        ]
+      },
+      "tests": []
+    },
+    {
+      "_id": "d6dc5c49-ab17-459e-9f39-b33746a9683b",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Create and confirm PaymentIntent (GrabPay)",
+      "url": "https://api.stripe.com/v1/payment_intents",
+      "method": "POST",
+      "sortNum": 31875,
+      "created": "2023-06-16T05:40:26.138Z",
+      "modified": "2023-06-16T05:40:26.138Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "formencoded",
+        "raw": "",
+        "form": [
+          {
+            "name": "amount",
+            "value": "900"
+          },
+          {
+            "name": "currency",
+            "value": "sgd"
+          },
+          {
+            "name": "customer",
+            "value": "cus_O5JXerOSP8J5ER"
+          },
+          {
+            "name": "payment_method_types[0]",
+            "value": "grabpay"
+          },
+          {
+            "name": "payment_method_data[type]",
+            "value": "grabpay"
+          },
+          {
+            "name": "confirm",
+            "value": "true"
+          },
+          {
+            "name": "return_url",
+            "value": "http://localhost:3000"
           }
         ]
       },
@@ -204,16 +257,16 @@
       "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
       "containerId": "",
       "name": "Succeed PaymentIntent",
-      "url": "https://pm-hooks.stripe.com/paynow/test/payment?external_transaction_id=payatt_3NJRJBE0jVisloCu0gvEycyA&testmode_status=SUCCESS&merchant_id=acct_1NIOT8E0jVisloCu",
+      "url": "https://pm-hooks.stripe.com/paynow/test/payment?external_transaction_id&testmode_status=SUCCESS&merchant_id=acct_1NIOT8E0jVisloCu",
       "method": "GET",
       "sortNum": 45000,
       "created": "2023-06-16T01:14:02.044Z",
-      "modified": "2023-06-16T01:22:20.157Z",
+      "modified": "2023-06-16T05:48:15.622Z",
       "headers": [],
       "params": [
         {
           "name": "external_transaction_id",
-          "value": "payatt_3NJRJBE0jVisloCu0gvEycyA",
+          "value": "",
           "isPath": false
         },
         {
@@ -234,16 +287,16 @@
       "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
       "containerId": "",
       "name": "Fail PaymentIntent",
-      "url": "https://pm-hooks.stripe.com/paynow/test/payment?external_transaction_id=payatt_3NJRPwE0jVisloCu146lhJfL&testmode_status=FAIL&merchant_id=acct_1NIOT8E0jVisloCu",
+      "url": "https://pm-hooks.stripe.com/paynow/test/payment?external_transaction_id=payatt_3NJRZ4E0jVisloCu1oCvteEu&testmode_status=FAIL&merchant_id=acct_1NIOT8E0jVisloCu",
       "method": "GET",
       "sortNum": 55000,
       "created": "2023-06-16T01:24:20.285Z",
-      "modified": "2023-06-16T01:26:04.207Z",
+      "modified": "2023-06-16T01:35:24.060Z",
       "headers": [],
       "params": [
         {
           "name": "external_transaction_id",
-          "value": "payatt_3NJRPwE0jVisloCu146lhJfL",
+          "value": "payatt_3NJRZ4E0jVisloCu1oCvteEu",
           "isPath": false
         },
         {
