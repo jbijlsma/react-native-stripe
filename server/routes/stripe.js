@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const axios = require("axios");
+const url = require("url");
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -36,15 +38,19 @@ router.post("/payment-intents", async (req, res) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount, // Integer, usd -> pennies, eur -> cents
       currency: "sgd",
-      // here we specify the available payment methods (not very useful if we payment_method_data.type to the one we choose)
+      // here we specify the available payment methods
       payment_method_types: ["card", "paynow", "grabpay"],
-      // to be able to confirm the selected payment method it has to be passed here
-      // payment_method_data: { type: "paynow" },
-      // confirm: true,
       ...confirmProps,
     });
 
+    const nextUriString =
+      paymentIntent.next_action?.paynow_display_qr_code?.data;
+    let nextUri = nextUriString ? url.parse(nextUriString, true) : null;
+    const paymentAttemptId = nextUri?.query?.payment_attempt;
+
     res.json({
+      id: paymentIntent.client_id,
+      paymentAttemptId: paymentAttemptId,
       secretKey: paymentIntent.client_secret,
       publishableKey: process.env.STRIPE_PUBLIC_KEY,
       qrCodePngUri:
@@ -55,6 +61,26 @@ router.post("/payment-intents", async (req, res) => {
       error: e.message,
     });
   }
+});
+
+const approveDeclinePayNowPaymentIntentBaseUri = `https://pm-hooks.stripe.com/paynow/test/payment?merchant_id=${process.env.MERCHANT_ID}`;
+
+router.get("/payment-intents/approve", async (req, res) => {
+  const { paymentAttemptId } = req.query;
+  const uri = `${approveDeclinePayNowPaymentIntentBaseUri}&external_transaction_id=${paymentAttemptId}&testmode_status=SUCCESS`;
+  console.log(uri);
+  await axios.get(uri);
+
+  res.sendStatus(200);
+});
+
+router.get("/payment-intents/decline", async (req, res) => {
+  const { paymentAttemptId } = req.query;
+  const uri = `${approveDeclinePayNowPaymentIntentBaseUri}&external_transaction_id=${paymentAttemptId}&testmode_status=FAIL`;
+  console.log(uri);
+  await axios.get(uri);
+
+  res.sendStatus(200);
 });
 
 router.get("/payment-link", async (req, res) => {

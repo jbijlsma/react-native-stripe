@@ -1,29 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "@react-navigation/native";
-import { Button, View, Image, StyleSheet, Alert } from "react-native";
+import { Button, Text, View, Image, StyleSheet, Alert } from "react-native";
 import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from "expo-file-system";
 
 import { usePaymentApi } from "../hooks/usePaymentApi";
+import { usePaymentEvents } from "../hooks/usePaymentEvents";
 
 function PayNativeCustomScreen() {
   const { colors } = useTheme();
-  const { createStripePaymentIntent } = usePaymentApi();
+  const {
+    createStripePaymentIntent,
+    approveStripePayNowPaymentIntent,
+    declineStripePayNowPaymentIntent,
+  } = usePaymentApi();
+  const latestStateUpdate = usePaymentEvents();
   const [_, requestPermission] = MediaLibrary.usePermissions();
 
-  const [qrCodePngUri, setQrCodePngUri] = useState(null);
+  const [paymentIntent, setPaymentIntent] = useState(null);
+
+  useEffect(() => {
+    console.log(latestStateUpdate);
+    if (
+      latestStateUpdate &&
+      paymentIntent &&
+      latestStateUpdate.id === paymentIntent.id
+    ) {
+      setPaymentIntent({ ...paymentIntent, status: latestStateUpdate?.status });
+    }
+  }, [latestStateUpdate]);
 
   async function onPayHandler() {
-    const paymentIntent = await createStripePaymentIntent("paynow");
+    const paynowPaymentIntent = await createStripePaymentIntent("paynow");
 
-    if (!paymentIntent.qrCodePngUri) {
+    if (!paynowPaymentIntent.qrCodePngUri) {
       Alert.alert(
         "Oeps",
         "The PaymentIntent returned does not contain a QR code link. Was the PaymentIntent confirmed?"
       );
     }
 
-    setQrCodePngUri(paymentIntent.qrCodePngUri);
+    setPaymentIntent(paynowPaymentIntent);
   }
 
   const downloadQrCode = async () => {
@@ -31,7 +48,10 @@ function PayNativeCustomScreen() {
       const date = new Date();
       const dateString = date.toISOString();
       let fileUri = FileSystem.documentDirectory + `${dateString}.png`;
-      const res = await FileSystem.downloadAsync(qrCodePngUri, fileUri);
+      const res = await FileSystem.downloadAsync(
+        paymentIntent.qrCodePngUri,
+        fileUri
+      );
       return res.uri;
     } catch (err) {
       Alert.alert("Oeps", "Failed to download QR code");
@@ -73,6 +93,14 @@ function PayNativeCustomScreen() {
     }
   }
 
+  async function successPaymentHandler() {
+    await approveStripePayNowPaymentIntent(paymentIntent.paymentAttemptId);
+  }
+
+  async function failedPaymentHandler() {
+    await declineStripePayNowPaymentIntent(paymentIntent.paymentAttemptId);
+  }
+
   return (
     <View
       style={{
@@ -85,7 +113,13 @@ function PayNativeCustomScreen() {
         onPress={onPayHandler}
       />
 
-      {qrCodePngUri && (
+      {paymentIntent?.status && (
+        <Text style={{ textAlign: "center" }}>
+          Status: {paymentIntent.status}
+        </Text>
+      )}
+
+      {paymentIntent?.qrCodePngUri && !paymentIntent?.status && (
         <View style={styles.payNowOuterContainer}>
           <View
             style={[
@@ -100,15 +134,25 @@ function PayNativeCustomScreen() {
             />
             <Image
               source={{
-                uri: qrCodePngUri,
+                uri: paymentIntent.qrCodePngUri,
               }}
               style={styles.payNowQrCode}
               resizeMode="contain"
             />
-            <View style={styles.saveBtnContainer}>
+            <View style={styles.saveButtonContainer}>
               <Button
                 title="Save QR Code"
                 onPress={saveQrCodeHandler}
+              />
+            </View>
+            <View style={styles.actionButtonsContainer}>
+              <Button
+                title={`Simulate \n Successfull Payment`}
+                onPress={successPaymentHandler}
+              />
+              <Button
+                title={`Simulate \n Failed Payment`}
+                onPress={failedPaymentHandler}
               />
             </View>
           </View>
@@ -140,8 +184,14 @@ const styles = StyleSheet.create({
     height: 300,
     width: 300,
   },
-  saveBtnContainer: {
+  saveButtonContainer: {
     paddingTop: 12,
+  },
+  actionButtonsContainer: {
+    paddingTop: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });
 

@@ -9,7 +9,7 @@ function WebViewPaymentScreen() {
   const { paymentBaseUri } = usePaymentApi();
 
   async function onPayHandler() {
-    const res = await fetch(`${paymentBaseUri}/payment-link`);
+    const res = await fetch(`${paymentBaseUri}/stripe/payment-link`);
     const paymentLink = await res.json();
     const paymentLinkUri = paymentLink.url;
 
