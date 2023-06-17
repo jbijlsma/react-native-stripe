@@ -114,7 +114,7 @@ function PayNativeCustomScreen() {
       />
 
       {paymentIntent?.status && (
-        <Text style={{ textAlign: "center" }}>
+        <Text style={{ textAlign: "center", color: colors.text }}>
           Status: {paymentIntent.status}
         </Text>
       )}
