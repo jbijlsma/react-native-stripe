@@ -1,7 +1,7 @@
 {
   "client": "Thunder Client",
   "collectionName": "Stripe",
-  "dateExported": "2023-06-16T09:02:37.485Z",
+  "dateExported": "2023-06-19T08:01:19.975Z",
   "version": "1.1",
   "folders": [],
   "requests": [
@@ -257,16 +257,16 @@
       "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
       "containerId": "",
       "name": "Succeed PaymentIntent",
-      "url": "https://pm-hooks.stripe.com/paynow/test/payment?external_transaction_id&testmode_status=SUCCESS&merchant_id=acct_1NIOT8E0jVisloCu",
+      "url": "https://pm-hooks.stripe.com/paynow/test/payment?external_transaction_id=payatt_3NKblREKeouT908J14mCKVhm&testmode_status=SUCCESS&merchant_id=acct_1NKbdTEKeouT908J",
       "method": "GET",
       "sortNum": 45000,
       "created": "2023-06-16T01:14:02.044Z",
-      "modified": "2023-06-16T05:48:15.622Z",
+      "modified": "2023-06-19T06:41:33.481Z",
       "headers": [],
       "params": [
         {
           "name": "external_transaction_id",
-          "value": "",
+          "value": "payatt_3NKblREKeouT908J14mCKVhm",
           "isPath": false
         },
         {
@@ -276,7 +276,7 @@
         },
         {
           "name": "merchant_id",
-          "value": "acct_1NIOT8E0jVisloCu",
+          "value": "acct_1NKbdTEKeouT908J",
           "isPath": false
         }
       ],
@@ -287,16 +287,16 @@
       "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
       "containerId": "",
       "name": "Fail PaymentIntent",
-      "url": "https://pm-hooks.stripe.com/paynow/test/payment?external_transaction_id=payatt_3NJRZ4E0jVisloCu1oCvteEu&testmode_status=FAIL&merchant_id=acct_1NIOT8E0jVisloCu",
+      "url": "https://pm-hooks.stripe.com/paynow/test/payment?external_transaction_id=payatt_3NKYGaE0jVisloCu0XprVpQE&testmode_status=FAIL&merchant_id=acct_1NKY082Rp7cxetqV",
       "method": "GET",
       "sortNum": 55000,
       "created": "2023-06-16T01:24:20.285Z",
-      "modified": "2023-06-16T01:35:24.060Z",
+      "modified": "2023-06-19T02:58:37.211Z",
       "headers": [],
       "params": [
         {
           "name": "external_transaction_id",
-          "value": "payatt_3NJRZ4E0jVisloCu1oCvteEu",
+          "value": "payatt_3NKYGaE0jVisloCu0XprVpQE",
           "isPath": false
         },
         {
@@ -306,10 +306,489 @@
         },
         {
           "name": "merchant_id",
-          "value": "acct_1NIOT8E0jVisloCu",
+          "value": "acct_1NKY082Rp7cxetqV",
           "isPath": false
         }
       ],
+      "tests": []
+    },
+    {
+      "_id": "3cab3a50-d7ce-4583-9bb5-04dd1985aa79",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Create Account (Company)",
+      "url": "https://api.stripe.com/v1/accounts?type=express&email=customer@customerdomain.com&country=SG&company[phone]=+6500000000&company[name]=JEROEN FOR A CAUSE&business_profile[mcc]=7941&company[tax_id]=T11SS0099L&company[address][line1]=Address Line 1&company[address][postal_code]=123456&business_type=company&business_profile[url]=www.dotnet-works.com&capabilities[card_payments][requested]=true",
+      "method": "POST",
+      "sortNum": 65000,
+      "created": "2023-06-19T01:33:29.902Z",
+      "modified": "2023-06-19T06:40:09.097Z",
+      "headers": [],
+      "params": [
+        {
+          "name": "type",
+          "value": "express",
+          "isPath": false
+        },
+        {
+          "name": "email",
+          "value": "customer@customerdomain.com",
+          "isPath": false
+        },
+        {
+          "name": "country",
+          "value": "SG",
+          "isPath": false
+        },
+        {
+          "name": "capabilities[paynow_payments][requested]",
+          "value": "true",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "capabilities[card_payments][requested]",
+          "value": "true",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "capabilities[transfers][requested]",
+          "value": "true",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "company[phone]",
+          "value": "+6500000000",
+          "isPath": false
+        },
+        {
+          "name": "company[name]",
+          "value": "JEROEN FOR A CAUSE",
+          "isPath": false
+        },
+        {
+          "name": "business_profile[name]",
+          "value": "JEROEN FOR A CAUSE",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "business_profile[mcc]",
+          "value": "7941",
+          "isPath": false
+        },
+        {
+          "name": "business_profile[product_description]",
+          "value": "Organise games",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "company[tax_id]",
+          "value": "T11SS0099L",
+          "isPath": false
+        },
+        {
+          "name": "company[address][city]",
+          "value": "Singapore",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "company[address][country]",
+          "value": "SG",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "company[address][line1]",
+          "value": "Address Line 1",
+          "isPath": false
+        },
+        {
+          "name": "company[address][line2]",
+          "value": "Test Condo",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "company[address][postal_code]",
+          "value": "123456",
+          "isPath": false
+        },
+        {
+          "name": "business_type",
+          "value": "company",
+          "isPath": false
+        },
+        {
+          "name": "business_profile[url]",
+          "value": "www.dotnet-works.com",
+          "isPath": false
+        },
+        {
+          "name": "representative[first_name]",
+          "value": "Andy",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "representative[first_name]",
+          "value": "Lau",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "representative[dob][day]",
+          "value": "06",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "representative[dob][month]",
+          "value": "10",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "representative[dob][year]",
+          "value": "1988",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "representative[email]",
+          "value": "andy@lau.com",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "representative[phone]",
+          "value": "+6500000000",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "representative[id_number]",
+          "value": "M1234561L",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "representative[relationship][title]",
+          "value": "CEO",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "representative[nationality]",
+          "value": "Singaporean",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "capabilities[card_payments][requested]",
+          "value": "true",
+          "isPath": false
+        }
+      ],
+      "tests": []
+    },
+    {
+      "_id": "6e75bc3b-216d-44ed-bc79-1324485d248b",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Create Account (Individual)",
+      "url": "https://api.stripe.com/v1/accounts?type=express&email=customer@customerdomain.com&country=SG&capabilities[paynow_payments][requested]=true&capabilities[card_payments][requested]=true&capabilities[transfers][requested]=true&company[phone]=+6500000000&company[name]=JEROEN FOR A CAUSE&business_profile[mcc]=7941&company[tax_id]=T11SS0099L&company[address][city]=Singapore&company[address][country]=SG&company[address][line1]=8 Test&company[address][line2]=Test Condo&company[address][postal_code]=123456&business_type=company&business_profile[url]=www.dotnet-works.com",
+      "method": "POST",
+      "sortNum": 70000,
+      "created": "2023-06-19T06:05:53.251Z",
+      "modified": "2023-06-19T06:05:53.251Z",
+      "headers": [],
+      "params": [
+        {
+          "name": "type",
+          "value": "express",
+          "isPath": false
+        },
+        {
+          "name": "email",
+          "value": "customer@customerdomain.com",
+          "isPath": false
+        },
+        {
+          "name": "country",
+          "value": "SG",
+          "isPath": false
+        },
+        {
+          "name": "capabilities[paynow_payments][requested]",
+          "value": "true",
+          "isPath": false
+        },
+        {
+          "name": "capabilities[card_payments][requested]",
+          "value": "true",
+          "isPath": false
+        },
+        {
+          "name": "capabilities[transfers][requested]",
+          "value": "true",
+          "isPath": false
+        },
+        {
+          "name": "company[phone]",
+          "value": "+6500000000",
+          "isPath": false
+        },
+        {
+          "name": "company[name]",
+          "value": "JEROEN FOR A CAUSE",
+          "isPath": false
+        },
+        {
+          "name": "business_profile[name]",
+          "value": "JEROEN FOR A CAUSE",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "business_profile[mcc]",
+          "value": "7941",
+          "isPath": false
+        },
+        {
+          "name": "business_profile[product_description]",
+          "value": "Organise games",
+          "isDisabled": true,
+          "isPath": false
+        },
+        {
+          "name": "company[tax_id]",
+          "value": "T11SS0099L",
+          "isPath": false
+        },
+        {
+          "name": "company[address][city]",
+          "value": "Singapore",
+          "isPath": false
+        },
+        {
+          "name": "company[address][country]",
+          "value": "SG",
+          "isPath": false
+        },
+        {
+          "name": "company[address][line1]",
+          "value": "8 Test",
+          "isPath": false
+        },
+        {
+          "name": "company[address][line2]",
+          "value": "Test Condo",
+          "isPath": false
+        },
+        {
+          "name": "company[address][postal_code]",
+          "value": "123456",
+          "isPath": false
+        },
+        {
+          "name": "business_type",
+          "value": "company",
+          "isPath": false
+        },
+        {
+          "name": "business_profile[url]",
+          "value": "www.dotnet-works.com",
+          "isPath": false
+        }
+      ],
+      "tests": []
+    },
+    {
+      "_id": "6a7aa09c-f8c6-4c30-9304-4b07db57d7ef",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "List Account",
+      "url": "https://api.stripe.com/v1/accounts",
+      "method": "GET",
+      "sortNum": 75000,
+      "created": "2023-06-19T01:38:01.793Z",
+      "modified": "2023-06-19T01:38:31.111Z",
+      "headers": [],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "0750c561-adac-441c-ba66-2324bde101e1",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Delete Account",
+      "url": "https://api.stripe.com/v1/accounts/acct_1NKb1wCuLVHVoCHe",
+      "method": "DELETE",
+      "sortNum": 85000,
+      "created": "2023-06-19T01:39:15.394Z",
+      "modified": "2023-06-19T06:22:00.648Z",
+      "headers": [],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "2c675e32-90e2-426b-9070-972d51f6848a",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Create and confirm PaymentIntent (Connected Account)",
+      "url": "https://api.stripe.com/v1/payment_intents",
+      "method": "POST",
+      "sortNum": 95000,
+      "created": "2023-06-19T01:54:00.594Z",
+      "modified": "2023-06-19T06:39:27.799Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        },
+        {
+          "name": "Stripe-Account",
+          "value": "acct_1NKbdTEKeouT908J"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "formencoded",
+        "raw": "",
+        "form": [
+          {
+            "name": "amount",
+            "value": "700"
+          },
+          {
+            "name": "currency",
+            "value": "sgd"
+          },
+          {
+            "name": "payment_method_types[0]",
+            "value": "paynow"
+          },
+          {
+            "name": "payment_method_data[type]",
+            "value": "paynow"
+          },
+          {
+            "name": "confirm",
+            "value": "true"
+          },
+          {
+            "name": "on_behalf_of",
+            "value": "acct_1NKY082Rp7cxetqV",
+            "isDisabled": true
+          }
+        ]
+      },
+      "tests": []
+    },
+    {
+      "_id": "9f9f6e0d-7809-45b5-b2bd-4fe2e0521fbe",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Get Account",
+      "url": "https://api.stripe.com/v1/accounts/acct_1NKY082Rp7cxetqV",
+      "method": "GET",
+      "sortNum": 95000,
+      "created": "2023-06-19T01:59:04.637Z",
+      "modified": "2023-06-19T05:44:29.056Z",
+      "headers": [],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "9621e8a2-d5b3-42b6-a50f-c13e5933a913",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Update Account",
+      "url": "https://api.stripe.com/v1/accounts/acct_1NKbdTEKeouT908J",
+      "method": "POST",
+      "sortNum": 105000,
+      "created": "2023-06-19T02:06:14.868Z",
+      "modified": "2023-06-19T06:40:28.686Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "formencoded",
+        "raw": "",
+        "form": [
+          {
+            "name": "capabilities[card_payments][requested]",
+            "value": "true"
+          }
+        ]
+      },
+      "tests": []
+    },
+    {
+      "_id": "2e670979-92df-4c99-9e51-85d044372d1c",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Create AccountLink",
+      "url": "https://api.stripe.com/v1/account_links",
+      "method": "POST",
+      "sortNum": 115000,
+      "created": "2023-06-19T04:49:01.766Z",
+      "modified": "2023-06-19T06:33:38.794Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "formencoded",
+        "raw": "",
+        "form": [
+          {
+            "name": "account",
+            "value": "acct_1NKbdTEKeouT908J"
+          },
+          {
+            "name": "refresh_url",
+            "value": "http://localhost:3000"
+          },
+          {
+            "name": "return_url",
+            "value": "http://localhost:3000"
+          },
+          {
+            "name": "type",
+            "value": "account_onboarding"
+          }
+        ]
+      },
+      "tests": []
+    },
+    {
+      "_id": "9af3acd5-66e5-4489-8f73-801a2d2fd393",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "Create Login Link",
+      "url": "https://api.stripe.com/v1/accounts/acct_1NKY082Rp7cxetqV/login_links",
+      "method": "POST",
+      "sortNum": 125000,
+      "created": "2023-06-19T05:04:01.467Z",
+      "modified": "2023-06-19T05:27:00.366Z",
+      "headers": [],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "ebf7870c-20a3-430e-8fcb-87d75cd97d56",
+      "colId": "6355bb10-c492-4f3c-8fbc-da882446e838",
+      "containerId": "",
+      "name": "List Persons",
+      "url": "https://api.stripe.com/v1/accounts/acct_1NKb1wCuLVHVoCHe/persons",
+      "method": "GET",
+      "sortNum": 135000,
+      "created": "2023-06-19T05:59:35.256Z",
+      "modified": "2023-06-19T06:04:13.008Z",
+      "headers": [],
+      "params": [],
       "tests": []
     }
   ],
