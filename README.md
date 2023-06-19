@@ -174,7 +174,7 @@ To start listening for such SSE with curl:
 curl -H Accept:text/event-stream http://localhost:4242/stripe-events/events
 ```
 
-Note the responde http header (Connection: "keep-alive"). This is what makes SSE possible.
+Note the response http header (Connection: "keep-alive"). This is what makes SSE possible.
 
 ## React Native PaymentSheet issues
 
@@ -313,6 +313,24 @@ Decline it:
 curl "http://localhost:4242/stripe-grab/payment-intents/pa_nonce_O5imDDkkF61DjRLzex7uuepMyXq4UfZ/decline"
 ```
 
+## Stripe Connected Accounts
+
+The Linked Accounts feature is useful for platform tools and market places. It allows the platform to send payments directly to connected customers (Linked Accounts) and collect fees on each succeeded payment.
+
+When creating a PaymentIntent for a Linked Account you pass the Merchant Id of the Linked Account in the request header:
+
+```javascript
+request.Headers.Add("Stripe-Account", "acct_xxx");
+```
+
+According to the Stripe API docs passing the on_behalf_of field in the request body should also be possible, but in my testing it did not work. The PaymentIntent did not end up under the Linked Account but under the main Merchant Account.
+
+Note that when linking a Custom Account you need to configure the allowed payment methods for the Linked Account seperately. Stripe distinguishes between Regular, Express and Custom accounts. You can read more about the in the docs.
+
+When you create a Stripe Account using the API there are country-specific requirements. You can prefill come of the required info to make it a bit easier for your customer. What is required per country can be found here:
+
+https://stripe.com/docs/connect/required-verification-information#SG-full-company--card_payments|transfers
+
 ## Stripe Docs
 
 In the Stripe Dashboard under Developers -> Events you can see all events that were generated.
@@ -326,3 +344,5 @@ https://stripe.com/docs/webhooks
 https://stripe.com/docs/api/events
 https://stripe.com/docs/cli
 https://stripe.com/docs/payment-links/customer-info
+
+https://connect.stripe.com/express/oauth/authorize?redirect_uri=https://connect.stripe.com/hosted/oauth&client_id=ca_O6ix8kglPjdNBLgfITqc27sBqoT36yIr&state=onbrd_O6nyClxF1ZxEKT0guaw0Dxrq18&stripe_user[country]=SG
