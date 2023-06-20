@@ -6,7 +6,10 @@ export function usePaymentApi() {
   const server = Platform.OS === "ios" ? LOCAL_IP ?? "0.0.0.0" : "10.0.2.2";
   const paymentBaseUri = `http://${server}:4242`;
 
-  const createStripePaymentIntent = async (selectedPaymentMethod) => {
+  const createStripePaymentIntent = async (
+    selectedPaymentMethod,
+    connectedAccountId
+  ) => {
     const uri = `${paymentBaseUri}/stripe/payment-intents`;
 
     try {
@@ -15,7 +18,11 @@ export function usePaymentApi() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ amount: 600, selectedPaymentMethod }),
+        body: JSON.stringify({
+          amount: 600,
+          selectedPaymentMethod,
+          connectedAccountId,
+        }),
       });
 
       const paymentIntent = await res.json();
@@ -31,16 +38,47 @@ export function usePaymentApi() {
     }
   };
 
-  const approveStripePayNowPaymentIntent = async (paymentAttemptId) => {
-    await fetch(
-      `${paymentBaseUri}/stripe/payment-intents/approve?paymentAttemptId=${paymentAttemptId}`
-    );
+  const approveStripePayNowPaymentIntent = async (
+    paymentAttemptId,
+    merchantId
+  ) => {
+    const uri = `${paymentBaseUri}/stripe/payment-intents/approve?paymentAttemptId=${paymentAttemptId}&merchantId=${
+      merchantId ?? ""
+    }`;
+    await fetch(uri);
   };
 
-  const declineStripePayNowPaymentIntent = async (paymentAttemptId) => {
-    await fetch(
-      `${paymentBaseUri}/stripe/payment-intents/decline?paymentAttemptId=${paymentAttemptId}`
-    );
+  const declineStripePayNowPaymentIntent = async (
+    paymentAttemptId,
+    merchantId
+  ) => {
+    const uri = `${paymentBaseUri}/stripe/payment-intents/decline?paymentAttemptId=${paymentAttemptId}&merchantId=${
+      merchantId ?? ""
+    }`;
+    await fetch(uri);
+  };
+
+  const getStripeLinkedAccounts = async () => {
+    const res = await fetch(`${paymentBaseUri}/stripe/accounts`);
+    return await res.json();
+  };
+
+  const createStripeLinkedAccount = async (returnUrl) => {
+    try {
+      const res = await fetch(`${paymentBaseUri}/stripe/accounts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ refreshUrl: returnUrl, returnUrl: returnUrl }),
+      });
+
+      const { accountLinkUrl } = await res.json();
+
+      return accountLinkUrl;
+    } catch (err) {
+      Alert.alert("Payment API request failed", err);
+    }
   };
 
   return {
@@ -48,5 +86,7 @@ export function usePaymentApi() {
     createStripePaymentIntent,
     approveStripePayNowPaymentIntent,
     declineStripePayNowPaymentIntent,
+    getStripeLinkedAccounts,
+    createStripeLinkedAccount,
   };
 }
